@@ -39,6 +39,8 @@ function startTransaction(){
     }
   })
 
+  betaalKnop.innerText = "Even Wachten..."
+
   $.ajax({
     method: "POST",
     url: "https://delavkiaanapi.herokuapp.com/transactions/StartTransactionTest",
