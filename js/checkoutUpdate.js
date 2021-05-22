@@ -41,7 +41,7 @@ function startTransaction(){
 
   $.ajax({
     method: "POST",
-    url: "https://delavkiaanapi.herokuapp.com/",
+    url: "https://delavkiaanapi.herokuapp.com/transactions/StartTransactionTest",
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
       amount: kostElementHidden.value,
