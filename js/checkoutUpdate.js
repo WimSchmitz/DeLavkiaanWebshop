@@ -25,7 +25,6 @@ function afterLoaded() {
 
 function updateKost() {
   var kost = (Number(aantalElement.value) * 48).toFixed(2);
-  console.log(kost)
   kostElement.innerText = "€" + kost;
   kostElementHidden.value = kost; 
 }
