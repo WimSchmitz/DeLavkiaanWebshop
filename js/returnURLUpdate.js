@@ -30,7 +30,7 @@ if(document.readyState === 'loading') {
   afterLoaded()
 }
 
-function afterLoadedWithTimeout(){
+function afterLoaded(){
   paymentStatusTitleElement = document.getElementById("paymentStatusTitle");
   paymentStatusBodyElement = document.getElementById("paymentStatusBody");
 
