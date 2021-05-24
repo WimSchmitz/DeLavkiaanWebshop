@@ -3,7 +3,6 @@ var kostElement
 var kostElementHidden
 var betaalKnop
 
-var inputData = {};
 var inputIds = ["FName", "LName", "Email", "Tel", "Street", "Number", "POBox", "Postal", "City"];
 
 if(document.readyState === 'loading') {
@@ -19,6 +18,9 @@ function afterLoaded() {
   betaalKnop = document.getElementById("betaalknop")
 
   aantalElement.onchange = updateKost;
+  inputIds.forEach(s=> {
+    document.getElementById(s).onchange = resetBetaalKnop;
+  })
   betaalKnop.onclick = startTransaction;
 }
 
@@ -27,45 +29,61 @@ function updateKost() {
     var kost = (Number(aantalElement.value) * 48).toFixed(2);
     betaalKnop.innerText = "Betalen"
     kostElement.innerText = "€" + kost;
+  } else {
+    betaalKnop.innerText = "Fout aantal, vul een getal in";
+    kostElement.innerText = "€0,00"
   }
+}
+
+function resetBetaalKnop(){
+  betaalKnop.innerText = "Betalen";
 }
 
 function startTransaction(){
   console.log(aantalElement.value)
+  var goAhead = true;
+
+  // Check Inputs
   inputIds.forEach(s =>{
-    inputData[s] = document.getElementById(s).value
-    if (document.getElementById(s) == "True" && inputData[s].value == "" ){
-      betaalKnop.innerText = "Missende info!"
-      return
+    var input = document.getElementById(s).value
+    var required = document.getElementById(s).required
+
+    if (required && (input == "" || input == null) ){
+      betaalKnop.innerText = "Missende info!";
+      goAhead = false;
     }
   })
 
+  // Check Amount
   if (aantalElement.value == "0" || !aantalElement.value || isNaN(aantalElement.value)) {
     betaalKnop.innerText = "Specifieer je aantal!"
-    return
+    goAhead = false;
   }
 
-  betaalKnop.innerText = "Even Wachten..."
-  setTimeout(startTransactionRequest, 2000)
+  if (goAhead) {
+    betaalKnop.innerText = "Even Wachten..."
+    // setTimeout(startTransactionRequest, 2000)
+  }
 }
 
 function startTransactionRequest(){
   $.ajax({
     method: "POST",
-    url: "http://localhost:3000/transactions/StartTransactionTest",
+    url: "https://delavkiaanapi.herokuapp.com/transactions/StartTransactionTest",
+    // url: "http://localhost:3000/transactions/StartTransactionTest",
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
       amount: aantalElement.value,
 
-      initials: inputData["FName"],
-      lastName: inputData["LName"],
-      emailAddress: inputData["Email"],
-      phoneNumber: inputData["Tel"],
+      fname: inputData["FName"],
+      lname: inputData["LName"],
+      email: inputData["Email"],
+      tel: inputData["Tel"],
 
-      streetName: inputData["Street"],
-      houseNumber: inputData["Number"],
-      houseNumberExtension: inputData["POBox"],
-      zipCode: inputData["Postal"],
+      street: inputData["Street"],
+      number: inputData["Number"],
+      ponumber: inputData["POBox"],
+      zip: inputData["Postal"],
       city: inputData["City"]
     }),
     success: function(data){
