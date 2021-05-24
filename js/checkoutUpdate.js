@@ -16,7 +16,6 @@ if(document.readyState === 'loading') {
 function afterLoaded() {
   aantalElement = document.getElementById("aantalBakken");
   kostElement = document.getElementById("kost");
-  kostElementHidden = document.getElementById("kostHidden");
   betaalKnop = document.getElementById("betaalknop")
 
   aantalElement.onchange = updateKost;
@@ -24,13 +23,15 @@ function afterLoaded() {
 }
 
 function updateKost() {
-  var kost = (Number(aantalElement.value) * 48).toFixed(2);
-  kostElement.innerText = "€" + kost;
-  kostElementHidden.value = kost; 
+  if (!isNaN(aantalElement.value)){
+    var kost = (Number(aantalElement.value) * 48).toFixed(2);
+    betaalKnop.innerText = "Betalen"
+    kostElement.innerText = "€" + kost;
+  }
 }
 
 function startTransaction(){
-    
+  console.log(aantalElement.value)
   inputIds.forEach(s =>{
     inputData[s] = document.getElementById(s).value
     if (document.getElementById(s) == "True" && inputData[s].value == "" ){
@@ -39,14 +40,22 @@ function startTransaction(){
     }
   })
 
-  betaalKnop.innerText = "Even Wachten..."
+  if (aantalElement.value == "0" || !aantalElement.value || isNaN(aantalElement.value)) {
+    betaalKnop.innerText = "Specifieer je aantal!"
+    return
+  }
 
+  betaalKnop.innerText = "Even Wachten..."
+  setTimeout(startTransactionRequest, 2000)
+}
+
+function startTransactionRequest(){
   $.ajax({
     method: "POST",
-    url: "https://delavkiaanapi.herokuapp.com/transactions/StartTransactionTest",
+    url: "http://localhost:3000/transactions/StartTransactionTest",
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
-      amount: kostElementHidden.value,
+      amount: aantalElement.value,
 
       initials: inputData["FName"],
       lastName: inputData["LName"],
