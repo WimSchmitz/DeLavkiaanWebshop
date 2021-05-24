@@ -1,7 +1,9 @@
-var aantalElement
-var kostElement
-var kostElementHidden
-var betaalKnop
+var aantalElement;
+var kostElement;
+var kostElementHidden;
+var betaalKnop;
+var subscribeButton;
+var emailInput;
 
 var inputIds = ["FName", "LName", "Email", "Tel", "Street", "Number", "POBox", "Postal", "City"];
 
@@ -15,13 +17,16 @@ if(document.readyState === 'loading') {
 function afterLoaded() {
   aantalElement = document.getElementById("aantalBakken");
   kostElement = document.getElementById("kost");
-  betaalKnop = document.getElementById("betaalknop")
+  betaalKnop = document.getElementById("betaalknop");
+  subscribeButton = document.getElementById("Subscribe")
 
   aantalElement.onchange = updateKost;
   inputIds.forEach(s=> {
     document.getElementById(s).onchange = resetBetaalKnop;
   })
+
   betaalKnop.onclick = startTransaction;
+  subscribeButton.onclick = subscribe;
 }
 
 function updateKost() {
@@ -91,6 +96,26 @@ function startTransactionRequest(){
     },
     error: function(data){
       console.log(data)
+    }
+  })
+}
+
+function subscribe() {
+  email = emailInput.value;
+
+  $.ajax({
+    method: "POST",
+    url: "https://delavkiaanapi.herokuapp.com/mails/subscribe",
+    // url: "http://localhost:3000/mails/subscribe",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({
+      email: email,
+    }),
+    success: function(data){
+      subscribeButton.innerText = "Ingeschreven!"
+    },
+    error: function(data){
+      subscribeButton.innerText = "Foutje..."
     }
   })
 }

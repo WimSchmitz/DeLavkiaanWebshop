@@ -19,6 +19,8 @@
         }
       });
     </script>
+  <script src="js/subscribeButton.js" type="text/javascript"></script>
+  <script src="js/contactButton.js" type="text/javascript"></script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
   <script type="text/javascript">
       ! function(o, c) {
@@ -130,16 +132,19 @@
       <div class="get-in-touch-form-wrap w-form">
         <form id="wf-form-Get-In-Touch-Form" name="wf-form-Get-In-Touch-Form" data-name="Get In Touch Form" class="get-in-touch-form">
           <div class="credentials-inputs-wrap">
-            <div class="contact-name-field-wrap"><label for="name">Naam</label><input type="text" class="text-field cc-contact-field w-input" maxlength="256" name="name" data-name="Name" placeholder="Peter Iggy" id="Name"></div>
-            <div class="email-name-field-wrap"><label for="Email-2">emailadress</label><input type="email" class="text-field cc-contact-field w-input" maxlength="256" name="Email" data-name="Email" placeholder="peter@iggy.be" id="Email-2" required=""></div>
-          </div><label>boodschap</label><textarea id="field" name="field" placeholder="Hoe koud dien ik deze bok te schenken?" maxlength="5000" data-name="Field" class="text-field cc-textarea cc-contact-field w-input"></textarea><input type="submit" value="Sturen" data-wait="2 secondjes..." class="button w-button">
+            <div class="contact-name-field-wrap">
+              <label for="name">Naam</label>
+              <input id="ContactName" type="text" class="text-field cc-contact-field w-input" maxlength="256" name="name" data-name="Name" placeholder="Peter Iggy" id="Name">
+            </div>
+            <div class="email-name-field-wrap">
+              <label for="Email-2">emailadress</label>
+              <input id="ContactEmail" type="email" class="text-field cc-contact-field w-input" maxlength="256" name="Email" data-name="Email" placeholder="peter@iggy.be" id="Email-2" required="">
+            </div>
+          </div>
+          <label>boodschap</label>
+          <textarea id="ContactMessage" name="field" placeholder="Hoe koud dien ik deze bok te schenken?" maxlength="5000" data-name="Field" class="text-field cc-textarea cc-contact-field w-input"></textarea>
+          <input id="ContactButton" type="submit" value="Sturen" data-wait="2 secondjes..." class="button w-button">
         </form>
-        <div class="status-message cc-success-message w-form-done">
-          <div>Thank you! Your submission has been received!</div>
-        </div>
-        <div class="status-message cc-error-message w-form-fail">
-          <div>Oops! Something went wrong while submitting the form.</div>
-        </div>
       </div>
     </div>
   </div>
@@ -148,13 +153,10 @@
       <div class="heading-jumbo-small">Hou mij op de hoogte</div>
       <div class="paragraph-light cc-subscribe-paragraph">Geen zorgen, geen vervelende nieuwsbrief, gewoon een seintje voor verdere informatie.</div>
       <div class="form-block w-form">
-        <form id="wf-form-Monthly-Newsletter-Form" name="wf-form-Monthly-Newsletter-Form" data-name="Monthly Newsletter Form" class="subscribe-form"><input type="email" class="text-field cc-subscribe-text-field w-input" maxlength="256" name="Newsletter-Email" data-name="Newsletter Email" placeholder="peter@iggy.be" id="Newsletter-Email" required=""><input type="submit" value="Doe maar" data-wait="2 secondjes..." class="button w-button"></form>
-        <div class="status-message w-form-done">
-          <div>Thank you! Your submission has been received!</div>
-        </div>
-        <div class="status-message w-form-fail">
-          <div>Oops! Something went wrong while submitting the form.</div>
-        </div>
+        <form id="wf-form-Monthly-Newsletter-Form" name="wf-form-Monthly-Newsletter-Form" data-name="Monthly Newsletter Form" class="subscribe-form">
+          <input id="SubscribeEmail" type="email" id="emailInput" class="text-field cc-subscribe-text-field w-input" maxlength="256" name="Newsletter-Email" data-name="Newsletter Email" placeholder="peter@iggy.be" id="Newsletter-Email" required="">
+          <input id="SubscribeButton" type="submit" id="Subscribe" value="Doe maar" data-wait="2 secondjes..." class="button w-button">
+        </form>
       </div>
     </div>
   </div>

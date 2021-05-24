@@ -1,3 +1,8 @@
+var subscribeButton;
+var emailInput;
+var paymentStatusBodyElement;
+var paymentStatusTitleElement;
+
 const SuccessTitleText = "Bedankt!";
 const SuccessBodyText = "Uw betaling is verwerkt, en wij hebben uw bestelling goed ontvangen. <br><br> "
   + "Over enkele weken kan u genieten van de meest Hasseltse bock ooit gebrouwen. <br><br>" 
@@ -22,19 +27,22 @@ const VerificationBodyText = "Er is een afwijkende statuscode doorgekomen. <br> 
   + "met vermelding van uw persoonlijke transactiecod: ";
 
 if(document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', afterLoadedWithTimeout);
+  document.addEventListener('DOMContentLoaded', afterLoaded);
 } else {
-  setTimeout(afterLoaded, 3000)
+  afterLoaded()
 }
 
 function afterLoadedWithTimeout(){
-  setTimeout(afterLoaded, 3000)
-}
-
-function afterLoaded() {
+  subscribeButton = document.getElementById("Subscribe")
+  emailInput = document.getElementById("emailInput")
   paymentStatusTitleElement = document.getElementById("paymentStatusTitle");
   paymentStatusBodyElement = document.getElementById("paymentStatusBody");
- 
+
+  subscribeButton.onclick = subscribe();
+  setTimeout(parsePaymentStatus, 3000)
+}
+
+function parsePaymentStatus() {
   var queryString = (window.location.search);
   console.log(queryString)
   var urlParams = new URLSearchParams(window.location.search);
@@ -42,8 +50,7 @@ function afterLoaded() {
   
   switch (urlParams.get("orderStatusId")) {
     case "100":
-      paymentStatusBodyElement.innerHTML = SuccessBodyText
-      paymentStatusTitleElement.innerHTML = SuccessTitleText
+      window.location.href = "bedankt.html";
       break;
 
     case "50":
@@ -64,4 +71,24 @@ function afterLoaded() {
       break; 
       
   }
+}
+
+function subsribe() {
+  email = emailInput.value;
+
+  $.ajax({
+    method: "POST",
+    url: "https://delavkiaanapi.herokuapp.com/mails/subscribe",
+    // url: "http://localhost:3000/mails/subscribe",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify({
+      email: email,
+    }),
+    success: function(data){
+      subscribeButton.innerText = "Ingeschreven!"
+    },
+    error: function(data){
+      subscribeButton.innerText = "Foutje..."
+    }
+  })
 }

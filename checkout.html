@@ -18,6 +18,7 @@
       });
     </script>
   <script src="js/checkoutUpdate.js" type="text/javascript"></script>
+  <script src="js/subscribeButton.js" type="text/javascript"></script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
   <script type="text/javascript">
       ! function(o, c) {
@@ -169,13 +170,10 @@
       <div class="heading-jumbo-small">Hou mij op de hoogte</div>
       <div class="paragraph-light cc-subscribe-paragraph">Geen zorgen, geen vervelende nieuwsbrief, gewoon een seintje voor verdere informatie.</div>
       <div class="form-block w-form">
-        <form id="wf-form-Monthly-Newsletter-Form" name="wf-form-Monthly-Newsletter-Form" data-name="Monthly Newsletter Form" class="subscribe-form"><input type="email" class="text-field cc-subscribe-text-field w-input" maxlength="256" name="Newsletter-Email" data-name="Newsletter Email" placeholder="peter@iggy.be" id="Newsletter-Email" required=""><input type="submit" value="Doe maar" data-wait="2 secondjes..." class="button w-button"></form>
-        <div class="status-message w-form-done">
-          <div>Thank you! Your submission has been received!</div>
-        </div>
-        <div class="status-message w-form-fail">
-          <div>Oops! Something went wrong while submitting the form.</div>
-        </div>
+        <form id="wf-form-Monthly-Newsletter-Form" name="wf-form-Monthly-Newsletter-Form" data-name="Monthly Newsletter Form" class="subscribe-form">
+          <input id="SubscribeEmail" type="email" id="emailInput" class="text-field cc-subscribe-text-field w-input" maxlength="256" name="Newsletter-Email" data-name="Newsletter Email" placeholder="peter@iggy.be" id="Newsletter-Email" required="">
+          <input id="SubscribeButton" type="submit" id="Subscribe" value="Doe maar" data-wait="2 secondjes..." class="button w-button">
+        </form>
       </div>
     </div>
   </div>
