@@ -26,7 +26,6 @@ function afterLoaded() {
   })
 
   betaalKnop.onclick = startTransaction;
-  subscribeButton.onclick = subscribe;
 }
 
 function updateKost() {
@@ -67,7 +66,7 @@ function startTransaction(){
 
   if (goAhead) {
     betaalKnop.innerText = "Even Wachten..."
-    // setTimeout(startTransactionRequest, 2000)
+    setTimeout(startTransactionRequest, 2000)
   }
 }
 
