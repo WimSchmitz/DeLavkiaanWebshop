@@ -1,5 +1,3 @@
-var subscribeButton;
-var emailInput;
 var paymentStatusBodyElement;
 var paymentStatusTitleElement;
 
@@ -33,12 +31,9 @@ if(document.readyState === 'loading') {
 }
 
 function afterLoadedWithTimeout(){
-  subscribeButton = document.getElementById("Subscribe")
-  emailInput = document.getElementById("emailInput")
   paymentStatusTitleElement = document.getElementById("paymentStatusTitle");
   paymentStatusBodyElement = document.getElementById("paymentStatusBody");
 
-  subscribeButton.onclick = subscribe();
   setTimeout(parsePaymentStatus, 3000)
 }
 
@@ -71,24 +66,4 @@ function parsePaymentStatus() {
       break; 
       
   }
-}
-
-function subsribe() {
-  email = emailInput.value;
-
-  $.ajax({
-    method: "POST",
-    url: "https://delavkiaanapi.herokuapp.com/mails/subscribe",
-    // url: "http://localhost:3000/mails/subscribe",
-    contentType: "application/json; charset=utf-8",
-    data: JSON.stringify({
-      email: email,
-    }),
-    success: function(data){
-      subscribeButton.innerText = "Ingeschreven!"
-    },
-    error: function(data){
-      subscribeButton.innerText = "Foutje..."
-    }
-  })
 }

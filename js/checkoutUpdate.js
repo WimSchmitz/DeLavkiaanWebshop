@@ -5,6 +5,7 @@ var betaalKnop;
 var subscribeButton;
 var emailInput;
 
+var inputData = {};
 var inputIds = ["FName", "LName", "Email", "Tel", "Street", "Number", "POBox", "Postal", "City"];
 
 if(document.readyState === 'loading') {
@@ -48,11 +49,11 @@ function startTransaction(){
   var goAhead = true;
 
   // Check Inputs
-  inputIds.forEach(s =>{
-    var input = document.getElementById(s).value
+  inputIds.forEach(s => {
+    inputData[s] = document.getElementById(s).value
     var required = document.getElementById(s).required
 
-    if (required && (input == "" || input == null) ){
+    if (required && (inputData[s] == "" || inputData[s] == null) ){
       betaalKnop.innerText = "Missende info!";
       goAhead = false;
     }
@@ -66,18 +67,18 @@ function startTransaction(){
 
   if (goAhead) {
     betaalKnop.innerText = "Even Wachten..."
-    setTimeout(startTransactionRequest, 2000)
+    setTimeout(startTransactionRequest(inputData, aantalElement.value), 2000)
   }
 }
 
-function startTransactionRequest(){
+function startTransactionRequest(inputData, amount){
   $.ajax({
     method: "POST",
     url: "https://delavkiaanapi.herokuapp.com/transactions/StartTransactionTest",
     // url: "http://localhost:3000/transactions/StartTransactionTest",
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
-      amount: aantalElement.value,
+      amount: amount,
 
       fname: inputData["FName"],
       lname: inputData["LName"],
@@ -95,26 +96,6 @@ function startTransactionRequest(){
     },
     error: function(data){
       console.log(data)
-    }
-  })
-}
-
-function subscribe() {
-  email = emailInput.value;
-
-  $.ajax({
-    method: "POST",
-    url: "https://delavkiaanapi.herokuapp.com/mails/subscribe",
-    // url: "http://localhost:3000/mails/subscribe",
-    contentType: "application/json; charset=utf-8",
-    data: JSON.stringify({
-      email: email,
-    }),
-    success: function(data){
-      subscribeButton.innerText = "Ingeschreven!"
-    },
-    error: function(data){
-      subscribeButton.innerText = "Foutje..."
     }
   })
 }
