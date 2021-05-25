@@ -7,6 +7,7 @@ var emailInput;
 
 var privacyCheckbox;
 var leaderboardCheckbox;
+var ageCheckbox;
 
 var inputData = {};
 var inputIds = ["FName", "LName", "Email", "Tel", "Street", "Number", "POBox", "Postal", "City"];
@@ -26,8 +27,10 @@ function afterLoaded() {
 
   privacyCheckbox = document.getElementById("PrivacyCheckbox");
   leaderboardCheckbox = document.getElementById("LeaderboardCheckbox");
+  ageCheckbox = document.getElementById("AgeCheckbox");
 
   privacyCheckbox.onchange = resetBetaalKnop;
+  ageCheckbox.onchange = resetBetaalKnop;
   aantalElement.onchange = updateKost;
   inputIds.forEach(s=> {
     document.getElementById(s).onchange = resetBetaalKnop;
@@ -75,6 +78,13 @@ function startTransaction(){
   var privacyChecked = privacyCheckbox.checked
   if (!privacyChecked && goAhead){
     betaalKnop.innerText = "Accepteer privacybeleid";
+    goAhead = false;
+  }
+
+  // Check Age
+  var ageChecked = ageCheckbox.checked
+  if (!ageChecked && goAhead){
+    betaalKnop.innerText = "Accepteer leeftijd";
     goAhead = false;
   }
 
