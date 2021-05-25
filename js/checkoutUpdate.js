@@ -88,8 +88,8 @@ function startTransaction(){
 function startTransactionRequest(leaderboardChecked, inputData, amount){
   $.ajax({
     method: "POST",
-    url: "https://delavkiaanapi.herokuapp.com/transactions/StartTransactionTest",
-    // url: "http://localhost:3000/transactions/StartTransactionTest",
+    url: "https://delavkiaanapi.herokuapp.com/transactions/StartTransaction",
+    // url: "http://localhost:3000/transactions/StartTransaction",
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify({
       amount: amount,
