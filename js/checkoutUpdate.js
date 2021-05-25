@@ -5,6 +5,9 @@ var betaalKnop;
 var subscribeButton;
 var emailInput;
 
+var privacyCheckbox;
+var leaderboardCheckbox;
+
 var inputData = {};
 var inputIds = ["FName", "LName", "Email", "Tel", "Street", "Number", "POBox", "Postal", "City"];
 
@@ -19,8 +22,12 @@ function afterLoaded() {
   aantalElement = document.getElementById("aantalBakken");
   kostElement = document.getElementById("kost");
   betaalKnop = document.getElementById("betaalknop");
-  subscribeButton = document.getElementById("Subscribe")
+  subscribeButton = document.getElementById("Subscribe");
 
+  privacyCheckbox = document.getElementById("PrivacyCheckbox");
+  leaderboardCheckbox = document.getElementById("LeaderboardCheckbox");
+
+  privacyCheckbox.onchange = resetBetaalKnop;
   aantalElement.onchange = updateKost;
   inputIds.forEach(s=> {
     document.getElementById(s).onchange = resetBetaalKnop;
@@ -45,33 +52,40 @@ function resetBetaalKnop(){
 }
 
 function startTransaction(){
-  console.log(aantalElement.value)
   var goAhead = true;
+
+  // Check Amount
+  if (goAhead && (aantalElement.value == "0" || !aantalElement.value || isNaN(aantalElement.value))) {
+    betaalKnop.innerText = "Specifieer je aantal!"
+    goAhead = false;
+  }
 
   // Check Inputs
   inputIds.forEach(s => {
     inputData[s] = document.getElementById(s).value
     var required = document.getElementById(s).required
 
-    if (required && (inputData[s] == "" || inputData[s] == null) ){
+    if (goAhead && required && (inputData[s] == "" || inputData[s] == null) ){
       betaalKnop.innerText = "Missende info!";
       goAhead = false;
     }
   })
 
-  // Check Amount
-  if (aantalElement.value == "0" || !aantalElement.value || isNaN(aantalElement.value)) {
-    betaalKnop.innerText = "Specifieer je aantal!"
+  // Check Privacy
+  var privacyChecked = privacyCheckbox.checked
+  if (!privacyChecked && goAhead){
+    betaalKnop.innerText = "Accepteer privacybeleid";
     goAhead = false;
   }
 
   if (goAhead) {
     betaalKnop.innerText = "Even Wachten..."
-    setTimeout(startTransactionRequest(inputData, aantalElement.value), 2000)
+    var leaderboardChecked = leaderboardCheckbox.checked
+    setTimeout(startTransactionRequest(leaderboardChecked, inputData, aantalElement.value), 2000)
   }
 }
 
-function startTransactionRequest(inputData, amount){
+function startTransactionRequest(leaderboardChecked, inputData, amount){
   $.ajax({
     method: "POST",
     url: "https://delavkiaanapi.herokuapp.com/transactions/StartTransactionTest",
@@ -89,7 +103,9 @@ function startTransactionRequest(inputData, amount){
       number: inputData["Number"],
       ponumber: inputData["POBox"],
       zip: inputData["Postal"],
-      city: inputData["City"]
+      city: inputData["City"],
+
+      leaderboard: leaderboardChecked
     }),
     success: function(data){
       window.location.href = data
