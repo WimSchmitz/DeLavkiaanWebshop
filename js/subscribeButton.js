@@ -19,6 +19,9 @@ function subscribe() {
   console.log("Triggered!")
   email = subscribeEmailElement.value;
 
+  subscribeButton.value = "Even Wachten...";
+  subscribeButton.onclick = null;
+
   $.ajax({
     method: "POST",
     url: "https://delavkiaanapi.herokuapp.com/mails/subscribe",
