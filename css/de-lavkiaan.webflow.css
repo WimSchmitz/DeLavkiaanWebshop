@@ -3217,7 +3217,7 @@ figcaption {
 
 .main-paragraph-wrap {
   margin-top: 60px;
-  margin-bottom: 150px;
+  margin-bottom: 60px;
   grid-column-gap: 50px;
   grid-row-gap: 50px;
   grid-template-areas: ". .";
@@ -3392,7 +3392,7 @@ figcaption {
 }
 
 .about-pictures-wrap {
-  margin-bottom: 150px;
+  margin-bottom: 50px;
   grid-column-gap: 30px;
   grid-row-gap: 30px;
   -ms-grid-rows: auto 30px auto;
@@ -3472,6 +3472,12 @@ figcaption {
   grid-template-rows: auto;
 }
 
+.grid-2 {
+  justify-items: center;
+  -ms-grid-rows: auto;
+  grid-template-rows: auto;
+}
+
 .support-link {
   margin-bottom: 10px;
   opacity: 0.7;
@@ -3481,6 +3487,10 @@ figcaption {
   line-height: 34px;
   font-weight: 400;
   text-decoration: none;
+}
+
+.heading-5 {
+  text-align: center;
 }
 
 .support-link:hover {
@@ -3988,6 +3998,11 @@ figcaption {
   -webkit-align-items: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
+}
+
+.container-4 {
+  max-width: 80vw;
+  margin-bottom: 52px;
 }
 
 .image {
